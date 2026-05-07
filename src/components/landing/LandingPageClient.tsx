@@ -2,7 +2,10 @@
 "use client";
 
 import { ChatPanel } from "@/components/chat/ChatPanel";
-import { normalizeLinkedInProfileUrl } from "@/lib/landing-config";
+import {
+  normalizeLinkedInProfileUrl,
+  normalizeWebsiteUrl,
+} from "@/lib/landing-config";
 import type { LandingGridLink, LandingPageConfig } from "@/types/landing";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -101,6 +104,42 @@ export function LandingPageClient({
       };
     }, [config.linkedinUrl, config.links]);
 
+  const contactLinks = useMemo(() => {
+    const phone = (config.contactPhone ?? "").trim();
+    const email = (config.contactEmail ?? "").trim();
+    const siteRaw = (config.websiteUrl ?? "").trim();
+    const site = siteRaw ? normalizeWebsiteUrl(siteRaw) : "";
+    const telBody = phone.replace(/^tel:/i, "").trim();
+    const phoneHref = telBody
+      ? `tel:${telBody.replace(/[\s()-]/g, "")}`
+      : null;
+    const emailHref =
+      email && email.includes("@")
+        ? `mailto:${encodeURIComponent(email)}`
+        : null;
+    const siteHref = site ? safeExternalHref(site) : null;
+    const siteLabel = siteHref
+      ? (() => {
+          try {
+            return new URL(site).hostname.replace(/^www\./i, "") || "Website";
+          } catch {
+            return "Website";
+          }
+        })()
+      : "Website";
+    const hasAny = Boolean(phone || email || siteHref);
+    return {
+      phone,
+      phoneHref,
+      email,
+      emailHref,
+      site,
+      siteHref,
+      siteLabel,
+      hasAny,
+    };
+  }, [config.contactPhone, config.contactEmail, config.websiteUrl]);
+
   function openLinkedInProfile() {
     const u = safeExternalHref(effectiveLinkedInUrl);
     if (u) window.open(u, "_blank", "noopener,noreferrer");
@@ -176,6 +215,36 @@ export function LandingPageClient({
               {[config.subheadline, config.location].filter(Boolean).join(" · ")}
             </p>
           )}
+          {contactLinks.hasAny ? (
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-sans text-sm">
+              {contactLinks.phoneHref ? (
+                <a
+                  href={contactLinks.phoneHref}
+                  className="font-medium text-violet-700 underline decoration-violet-400/70 underline-offset-2 hover:text-violet-900 dark:text-violet-300 dark:hover:text-white"
+                >
+                  {contactLinks.phone}
+                </a>
+              ) : null}
+              {contactLinks.emailHref ? (
+                <a
+                  href={contactLinks.emailHref}
+                  className="font-medium text-violet-700 underline decoration-violet-400/70 underline-offset-2 hover:text-violet-900 dark:text-violet-300 dark:hover:text-white"
+                >
+                  {contactLinks.email}
+                </a>
+              ) : null}
+              {contactLinks.siteHref ? (
+                <a
+                  href={contactLinks.siteHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-violet-700 underline decoration-violet-400/70 underline-offset-2 hover:text-violet-900 dark:text-violet-300 dark:hover:text-white"
+                >
+                  {contactLinks.siteLabel}
+                </a>
+              ) : null}
+            </div>
+          ) : null}
           {config.bio ? (
             <p className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
               {config.bio}

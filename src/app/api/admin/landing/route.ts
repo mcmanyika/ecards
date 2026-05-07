@@ -5,6 +5,7 @@ import {
   mergeLandingFromFirestore,
   normalizeLinkedInProfileUrl,
   normalizePrimaryCtaLabel,
+  normalizeWebsiteUrl,
   sanitizeSlug,
 } from "@/lib/landing-config";
 import { getDb } from "@/lib/firebase/admin";
@@ -54,6 +55,9 @@ function parseBody(body: unknown): LandingPageConfig | null {
   const linkedinUrlNorm = normalizeLinkedInProfileUrl(
     typeof o.linkedinUrl === "string" ? o.linkedinUrl : "",
   );
+  const websiteUrlNorm = normalizeWebsiteUrl(
+    typeof o.websiteUrl === "string" ? o.websiteUrl : "",
+  );
   if (linkedinUrlNorm) {
     links = links.filter(
       (l) =>
@@ -89,6 +93,11 @@ function parseBody(body: unknown): LandingPageConfig | null {
       "Lets Talk",
     ),
     linkedinUrl: linkedinUrlNorm,
+    contactPhone:
+      typeof o.contactPhone === "string" ? o.contactPhone.trim() : "",
+    contactEmail:
+      typeof o.contactEmail === "string" ? o.contactEmail.trim() : "",
+    websiteUrl: websiteUrlNorm,
     links: links.slice(0, 24),
   };
 

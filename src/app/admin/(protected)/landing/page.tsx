@@ -381,6 +381,55 @@ export default function AdminLandingEditorPage() {
               />
             </label>
 
+            <div className="grid gap-4 sm:grid-cols-1">
+              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                Phone (optional)
+                <input
+                  type="tel"
+                  className="mt-2 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 dark:border-white/10 dark:bg-zinc-950"
+                  value={config.contactPhone ?? ""}
+                  onChange={(e) =>
+                    setConfig({ ...config, contactPhone: e.target.value })
+                  }
+                  placeholder="+1 (555) 123-4567"
+                  autoComplete="tel"
+                />
+              </label>
+              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                Email (optional)
+                <input
+                  type="email"
+                  className="mt-2 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 dark:border-white/10 dark:bg-zinc-950"
+                  value={config.contactEmail ?? ""}
+                  onChange={(e) =>
+                    setConfig({ ...config, contactEmail: e.target.value })
+                  }
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                />
+              </label>
+              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                Website (optional)
+                <input
+                  type="url"
+                  className="mt-2 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 font-mono text-sm dark:border-white/10 dark:bg-zinc-950"
+                  value={config.websiteUrl ?? ""}
+                  onChange={(e) =>
+                    setConfig({ ...config, websiteUrl: e.target.value })
+                  }
+                  placeholder="https://loadmaster.example or example.com"
+                  spellCheck={false}
+                />
+                <span className="mt-1 block text-xs text-zinc-500">
+                  Shown as a &quot;Website&quot; link;{" "}
+                  <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">
+                    https://
+                  </code>{" "}
+                  is added if you omit it.
+                </span>
+              </label>
+            </div>
+
             <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Bio
               <textarea

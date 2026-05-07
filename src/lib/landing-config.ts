@@ -24,6 +24,9 @@ export function defaultLandingConfig(slug: string): LandingPageConfig {
       "#LoadMaster #SaaS #DataEngineering #AWS #Python #Django #NextJs #React #PostgreSQL #LogisticsTech #StartupFounder #Firebase #Blockchain",
     primaryCtaLabel: "Lets Talk",
     linkedinUrl: "",
+    contactPhone: "",
+    contactEmail: "",
+    websiteUrl: "",
     links: [],
   };
 }
@@ -66,6 +69,15 @@ export function normalizeLinkedInProfileUrl(raw: string): string {
   return `https://${t.replace(/^\/+/, "")}`;
 }
 
+/** Ensures https:// for pasted website URLs (not mailto/tel). */
+export function normalizeWebsiteUrl(raw: string): string {
+  const t = raw.trim();
+  if (!t) return "";
+  if (/^mailto:/i.test(t) || /^tel:/i.test(t)) return t;
+  if (/^https?:\/\//i.test(t)) return t;
+  return `https://${t.replace(/^\/+/, "")}`;
+}
+
 function action(v: unknown): LandingLinkAction {
   return v === "chat" ? "chat" : "external";
 }
@@ -102,6 +114,7 @@ export function mergeLandingFromFirestore(
     .filter((x): x is LandingGridLink => x !== null);
 
   const linkedinUrl = normalizeLinkedInProfileUrl(str(data.linkedinUrl, ""));
+  const websiteUrl = normalizeWebsiteUrl(str(data.websiteUrl, ""));
 
   const bannerRaw = str(data.bannerUrl).trim();
   const avatarRaw = str(data.avatarUrl).trim();
@@ -124,6 +137,9 @@ export function mergeLandingFromFirestore(
       base.primaryCtaLabel,
     ),
     linkedinUrl,
+    contactPhone: str(data.contactPhone),
+    contactEmail: str(data.contactEmail).trim(),
+    websiteUrl,
     links,
   };
 }

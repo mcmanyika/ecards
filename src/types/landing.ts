@@ -24,5 +24,10 @@ export interface LandingPageConfig {
   primaryCtaLabel: string;
   /** Profile URL; https:// added automatically when missing. Shows branded LinkedIn tile. */
   linkedinUrl: string;
+  /** Public contact line; shown as tel: / mailto: / external link on the landing page. */
+  contactPhone: string;
+  contactEmail: string;
+  /** Personal or company site; https:// added when missing. */
+  websiteUrl: string;
   links: LandingGridLink[];
 }
