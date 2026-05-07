@@ -33,6 +33,79 @@ function safeExternalHref(href: string | undefined): string | null {
   return null;
 }
 
+/** Drops subheadline text that only repeats display name or "Name · rest". */
+function subheadlineWithoutRepeatedName(
+  displayName: string,
+  subheadline: string,
+): string {
+  const d = displayName.trim();
+  const s = subheadline.trim();
+  if (!s || !d) return s;
+  if (s.toLowerCase() === d.toLowerCase()) return "";
+  const esc = d.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const afterName = s.replace(new RegExp(`^${esc}\\s*[·•|,]\\s*`, "i"), "").trim();
+  return afterName !== s ? afterName : s;
+}
+
+function PhoneIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  );
+}
+
+function MailIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <path d="m22 6-10 7L2 6" />
+    </svg>
+  );
+}
+
+function GlobeIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+  );
+}
+
+const CONTACT_CHIP_LINK_CLASS =
+  "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full border border-violet-200/90 bg-white px-3.5 py-2 font-medium text-violet-900 shadow-sm transition-[background-color,border-color,box-shadow] no-underline hover:border-violet-300 hover:bg-violet-50 hover:shadow-md dark:border-violet-500/25 dark:bg-zinc-900/75 dark:text-violet-100 dark:hover:border-violet-400/35 dark:hover:bg-violet-950/50";
+
+const CONTACT_CHIP_ICON_CLASS =
+  "size-4 shrink-0 text-violet-600 opacity-90 dark:text-violet-300";
+
 function LinkedInBrandTile() {
   return (
     <div className="flex h-full w-full items-center justify-center bg-[#0A66C2]">
@@ -103,6 +176,16 @@ export function LandingPageClient({
         tileCount,
       };
     }, [config.linkedinUrl, config.links]);
+
+  const metaLineParts = useMemo(() => {
+    const sub = subheadlineWithoutRepeatedName(
+      config.displayName,
+      config.subheadline ?? "",
+    );
+    const loc = (config.location ?? "").trim();
+    const parts = [sub, loc].filter(Boolean);
+    return [...new Set(parts.map((p) => p.trim()))];
+  }, [config.displayName, config.subheadline, config.location]);
 
   const contactLinks = useMemo(() => {
     const phone = (config.contactPhone ?? "").trim();
@@ -210,27 +293,23 @@ export function LandingPageClient({
           <p className="text-base leading-snug text-zinc-800 dark:text-zinc-200">
             {config.headline}
           </p>
-          {(config.subheadline || config.location) && (
+          {metaLineParts.length > 0 ? (
             <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-              {[config.subheadline, config.location].filter(Boolean).join(" · ")}
+              {metaLineParts.join(" · ")}
             </p>
-          )}
+          ) : null}
           {contactLinks.hasAny ? (
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-sans text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-2.5 font-sans text-sm sm:gap-3">
               {contactLinks.phoneHref ? (
-                <a
-                  href={contactLinks.phoneHref}
-                  className="font-medium text-violet-700 underline decoration-violet-400/70 underline-offset-2 hover:text-violet-900 dark:text-violet-300 dark:hover:text-white"
-                >
-                  {contactLinks.phone}
+                <a href={contactLinks.phoneHref} className={CONTACT_CHIP_LINK_CLASS}>
+                  <PhoneIcon className={CONTACT_CHIP_ICON_CLASS} />
+                  <span className="truncate">{contactLinks.phone}</span>
                 </a>
               ) : null}
               {contactLinks.emailHref ? (
-                <a
-                  href={contactLinks.emailHref}
-                  className="font-medium text-violet-700 underline decoration-violet-400/70 underline-offset-2 hover:text-violet-900 dark:text-violet-300 dark:hover:text-white"
-                >
-                  {contactLinks.email}
+                <a href={contactLinks.emailHref} className={CONTACT_CHIP_LINK_CLASS}>
+                  <MailIcon className={CONTACT_CHIP_ICON_CLASS} />
+                  <span className="truncate">{contactLinks.email}</span>
                 </a>
               ) : null}
               {contactLinks.siteHref ? (
@@ -238,9 +317,10 @@ export function LandingPageClient({
                   href={contactLinks.siteHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-violet-700 underline decoration-violet-400/70 underline-offset-2 hover:text-violet-900 dark:text-violet-300 dark:hover:text-white"
+                  className={CONTACT_CHIP_LINK_CLASS}
                 >
-                  {contactLinks.siteLabel}
+                  <GlobeIcon className={CONTACT_CHIP_ICON_CLASS} />
+                  <span className="truncate">{contactLinks.siteLabel}</span>
                 </a>
               ) : null}
             </div>
