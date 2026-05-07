@@ -357,16 +357,14 @@ export function LandingPageClient({
               <button
                 type="button"
                 onClick={openLinkedInProfile}
-                className={`flex flex-col items-center gap-2 text-center ${
+                aria-label="Open LinkedIn profile"
+                className={`flex flex-col items-center text-center ${
                   tileCount === 1 ? "w-[36%] max-w-[124px]" : ""
                 }`}
               >
                 <div className="aspect-square w-full overflow-hidden rounded-2xl shadow-md shadow-zinc-400/20 dark:shadow-zinc-950/35">
                   <LinkedInBrandTile />
                 </div>
-                <span className="line-clamp-2 w-full text-[11px] font-medium leading-tight text-zinc-800 dark:text-zinc-200">
-                  LinkedIn
-                </span>
               </button>
             ) : null}
             {otherLinks.map((link) => (
