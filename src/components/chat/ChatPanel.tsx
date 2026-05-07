@@ -7,6 +7,14 @@ import { Button } from "@/components/ui/Button";
 import type { ChatMessage } from "@/types";
 import { useCallback, useState } from "react";
 
+const MENU_OPTIONS = [
+  "Tell me about LoadMaster features",
+  "What services do you offer?",
+  "Can you help with data engineering projects?",
+  "Show pricing and engagement options",
+  "I want to book a consultation",
+] as const;
+
 export function ChatPanel({
   sheetEmbed = false,
 }: {
@@ -21,8 +29,8 @@ export function ChatPanel({
   const [leadOpen, setLeadOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
-  const send = useCallback(async () => {
-    const text = input.trim();
+  const send = useCallback(async (overrideText?: string) => {
+    const text = (overrideText ?? input).trim();
     if (!text || loading) return;
 
     const userMessage: ChatMessage = {
@@ -108,11 +116,22 @@ export function ChatPanel({
 
       {messages.length === 0 && !loading && (
         <div className="mx-5 mt-4 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm text-violet-950 dark:border-violet-500/20 dark:bg-violet-950/30 dark:text-violet-100/90">
-          Hi — ask about LoadMaster (TMS/logistics SaaS), or Partson&apos;s
-          freelance full-stack/data work—or share
-          your <strong>name</strong>, <strong>email</strong>, and{" "}
-          <strong>phone</strong> here. Budget and timing:&nbsp;
-          <strong className="font-semibold">Get a quote</strong>.
+          <p className="font-semibold">Menu</p>
+          <p className="mt-1">
+            Pick one to start quickly, or type your own question.
+          </p>
+          <div className="mt-3 grid gap-2">
+            {MENU_OPTIONS.map((label) => (
+              <button
+                key={label}
+                type="button"
+                className="rounded-xl border border-violet-300/70 bg-white px-3 py-2 text-left text-sm text-violet-950 transition hover:bg-violet-100 dark:border-violet-400/30 dark:bg-zinc-900/70 dark:text-violet-100 dark:hover:bg-violet-900/35"
+                onClick={() => void send(label)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
