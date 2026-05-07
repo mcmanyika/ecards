@@ -4,7 +4,22 @@
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { normalizeLinkedInProfileUrl } from "@/lib/landing-config";
 import type { LandingGridLink, LandingPageConfig } from "@/types/landing";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+function initialsFromDisplayName(name: string): string {
+  const parts = name
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) {
+    const w = parts[0] ?? "";
+    return w.slice(0, 2).toUpperCase() || "?";
+  }
+  const a = parts[0]?.[0] ?? "";
+  const b = parts[parts.length - 1]?.[0] ?? "";
+  return `${a}${b}`.toUpperCase() || "?";
+}
 
 function safeExternalHref(href: string | undefined): string | null {
   const t = (href ?? "").trim();
@@ -36,6 +51,18 @@ export function LandingPageClient({
   config: LandingPageConfig;
 }) {
   const [chatOpen, setChatOpen] = useState(false);
+  const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
+
+  const avatarSrc = (config.avatarUrl ?? "").trim();
+  const avatarInitials = useMemo(
+    () => initialsFromDisplayName(config.displayName),
+    [config.displayName],
+  );
+  const showAvatarImage = Boolean(avatarSrc) && !avatarLoadFailed;
+
+  useEffect(() => {
+    setAvatarLoadFailed(false);
+  }, [avatarSrc]);
 
   const openChat = useCallback(() => setChatOpen(true), []);
   const closeChat = useCallback(() => setChatOpen(false), []);
@@ -103,14 +130,27 @@ export function LandingPageClient({
 
         <div className="relative flex justify-center">
           <div className="relative -mt-14">
-            <div className="h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-zinc-200 shadow-lg shadow-zinc-400/25 dark:border-zinc-950 dark:bg-zinc-800 dark:shadow-zinc-950/40">
-              {config.avatarUrl ? (
+            <div
+              className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-zinc-200 shadow-lg shadow-zinc-400/25 dark:border-zinc-950 dark:bg-zinc-800 dark:shadow-zinc-950/40"
+              {...(showAvatarImage
+                ? {}
+                : {
+                    role: "img" as const,
+                    "aria-label": `${config.displayName}, ${avatarInitials}`,
+                  })}
+            >
+              {showAvatarImage ? (
                 <img
-                  src={config.avatarUrl}
-                  alt=""
+                  src={avatarSrc}
+                  alt={`${config.displayName}`}
                   className="h-full w-full object-cover"
+                  onError={() => setAvatarLoadFailed(true)}
                 />
-              ) : null}
+              ) : (
+                <span className="select-none font-sans text-2xl font-semibold tracking-wide text-zinc-600 dark:text-zinc-300">
+                  {avatarInitials}
+                </span>
+              )}
             </div>
             {config.badgeUrl ? (
               <div className="absolute bottom-1 right-1 h-9 w-9 overflow-hidden rounded-full border-2 border-white bg-white shadow-md shadow-zinc-400/20 dark:border-zinc-950 dark:bg-white">

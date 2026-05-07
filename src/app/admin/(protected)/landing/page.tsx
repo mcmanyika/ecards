@@ -321,7 +321,7 @@ export default function AdminLandingEditorPage() {
                 onChange={(e) =>
                   setConfig({ ...config, avatarUrl: e.target.value })
                 }
-                placeholder="https://…"
+                placeholder="https://… or /image/manyika.jpeg"
               />
             </label>
 

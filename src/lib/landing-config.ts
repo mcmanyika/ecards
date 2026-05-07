@@ -11,7 +11,7 @@ export function defaultLandingConfig(slug: string): LandingPageConfig {
     slug,
     published: false,
     bannerUrl: "",
-    avatarUrl: "/manyika.jpeg",
+    avatarUrl: "",
     badgeUrl: "",
     displayName: "Your name",
     headline: "Professional headline · Tagline",
@@ -28,6 +28,10 @@ export function defaultLandingConfig(slug: string): LandingPageConfig {
 function normalizeImageUrl(raw: string): string {
   const t = raw.trim();
   if (!t) return "";
+  // Legacy root path after moving asset to `public/image/manyika.jpeg`
+  if (/^\/?manyika\.jpeg$/i.test(t)) {
+    return "/image/manyika.jpeg";
+  }
   if (
     t.startsWith("/") ||
     /^https?:\/\//i.test(t) ||
