@@ -3,6 +3,7 @@
 import { ChatInput } from "@/components/chat/ChatInput";
 import { ChatMessageList } from "@/components/chat/ChatMessageList";
 import { LeadCaptureModal } from "@/components/leads/LeadCaptureModal";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import type { ChatMessage } from "@/types";
 import { useCallback, useState } from "react";
@@ -97,13 +98,16 @@ export function ChatPanel({
             scheduling.
           </p>
         </div>
-        <Button
-          variant="secondary"
-          onClick={() => setLeadOpen(true)}
-          className="text-xs"
-        >
-          Get a quote
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle className="h-9 w-9" />
+          <Button
+            variant="secondary"
+            onClick={() => setLeadOpen(true)}
+            className="text-xs"
+          >
+            Get a quote
+          </Button>
+        </div>
       </header>
 
       {toast && (
@@ -113,14 +117,14 @@ export function ChatPanel({
       )}
 
       {messages.length === 0 && !loading && (
-        <div className="mx-5 mt-4 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm text-violet-950 dark:border-violet-500/20 dark:bg-violet-950/30 dark:text-violet-100/90">
+        <div className="mx-5 mt-4 rounded-2xl border border-zinc-300 bg-zinc-100 px-4 py-3 text-sm text-zinc-900 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100">
           <p className="font-semibold">Menu</p>
           <div className="mt-3 grid gap-2">
             {MENU_OPTIONS.map((label) => (
               <button
                 key={label}
                 type="button"
-                className="rounded-xl border border-violet-300/70 bg-white px-3 py-2 text-left text-sm text-violet-950 transition hover:bg-violet-100 dark:border-violet-400/30 dark:bg-zinc-900/70 dark:text-violet-100 dark:hover:bg-violet-900/35"
+                className="rounded-xl border border-zinc-300 bg-white px-3 py-2 text-left text-sm text-zinc-900 transition hover:bg-zinc-200 dark:border-white/10 dark:bg-zinc-900/70 dark:text-zinc-100 dark:hover:bg-zinc-800"
                 onClick={() => void send(label)}
               >
                 {label}

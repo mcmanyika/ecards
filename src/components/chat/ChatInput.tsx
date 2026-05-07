@@ -29,7 +29,7 @@ export function ChatInput({
         <textarea
           rows={1}
           placeholder="Ask anything…"
-          className="max-h-40 min-h-[48px] flex-1 resize-none rounded-xl border border-zinc-300 bg-white px-3 py-3 text-[15px] text-zinc-900 placeholder:text-zinc-500 focus:border-violet-500/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 dark:border-white/10 dark:bg-zinc-900/80 dark:text-zinc-100 dark:focus:border-violet-500/50 dark:focus:ring-violet-500/20"
+          className="max-h-40 min-h-[48px] flex-1 resize-none rounded-xl border border-zinc-300 bg-white px-3 py-3 text-[15px] text-zinc-900 placeholder:text-zinc-500 focus:border-zinc-500/60 focus:outline-none focus:ring-2 focus:ring-zinc-500/25 dark:border-white/10 dark:bg-zinc-900/80 dark:text-zinc-100 dark:focus:border-zinc-400/50 dark:focus:ring-zinc-500/20"
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
@@ -42,7 +42,7 @@ export function ChatInput({
         />
         <Button
           type="submit"
-          variant="primary"
+          variant="secondary"
           disabled={disabled || !value.trim()}
           className="shrink-0 self-end px-5"
         >

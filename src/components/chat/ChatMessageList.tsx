@@ -19,7 +19,7 @@ export function ChatMessageList({
           <div
             className={`max-w-[85%] rounded-2xl px-4 py-3 text-[15px] leading-relaxed shadow-sm ${
               m.role === "user"
-                ? "bg-violet-600 text-white"
+                ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950"
                 : "bg-zinc-100 text-zinc-900 ring-1 ring-zinc-200 dark:bg-zinc-800/90 dark:text-zinc-100 dark:ring-white/10"
             }`}
           >
@@ -32,9 +32,9 @@ export function ChatMessageList({
           <div className="rounded-2xl bg-zinc-100 px-4 py-3 ring-1 ring-zinc-200 dark:bg-zinc-800/90 dark:ring-white/10">
             <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
               <span className="flex gap-1">
-                <span className="h-2 w-2 animate-bounce rounded-full bg-violet-400 [animation-delay:-0.3s]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-violet-400 [animation-delay:-0.15s]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-violet-400" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500 [animation-delay:-0.3s] dark:bg-zinc-400" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500 [animation-delay:-0.15s] dark:bg-zinc-400" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500 dark:bg-zinc-400" />
               </span>
               Thinking…
             </div>
