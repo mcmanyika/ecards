@@ -115,9 +115,6 @@ export function ChatPanel({
       {messages.length === 0 && !loading && (
         <div className="mx-5 mt-4 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm text-violet-950 dark:border-violet-500/20 dark:bg-violet-950/30 dark:text-violet-100/90">
           <p className="font-semibold">Menu</p>
-          <p className="mt-1">
-            Pick one to start quickly, or type your own question.
-          </p>
           <div className="mt-3 grid gap-2">
             {MENU_OPTIONS.map((label) => (
               <button

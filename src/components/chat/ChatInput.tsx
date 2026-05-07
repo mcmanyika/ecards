@@ -49,9 +49,6 @@ export function ChatInput({
           Send
         </Button>
       </div>
-      <p className="mt-2 text-center text-xs text-zinc-500">
-        Shift+Enter for a new line
-      </p>
     </form>
   );
 }
