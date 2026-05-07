@@ -10,9 +10,7 @@ import { useCallback, useState } from "react";
 const MENU_OPTIONS = [
   "Tell me about LoadMaster features",
   "What services do you offer?",
-  "Can you help with data engineering projects?",
   "Show pricing and engagement options",
-  "I want to book a consultation",
 ] as const;
 
 export function ChatPanel({
