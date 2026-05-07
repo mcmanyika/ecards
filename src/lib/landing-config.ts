@@ -11,7 +11,7 @@ export function defaultLandingConfig(slug: string): LandingPageConfig {
     slug,
     published: false,
     bannerUrl: "",
-    avatarUrl: "",
+    avatarUrl: "/manyika.jpeg",
     badgeUrl: "",
     displayName: "Your name",
     headline: "Professional headline · Tagline",
@@ -23,6 +23,20 @@ export function defaultLandingConfig(slug: string): LandingPageConfig {
     linkedinUrl: "",
     links: [],
   };
+}
+
+function normalizeImageUrl(raw: string): string {
+  const t = raw.trim();
+  if (!t) return "";
+  if (
+    t.startsWith("/") ||
+    /^https?:\/\//i.test(t) ||
+    /^data:/i.test(t) ||
+    /^blob:/i.test(t)
+  ) {
+    return t;
+  }
+  return `/${t.replace(/^\.?\/*/, "")}`;
 }
 
 function str(v: unknown, fallback = ""): string {
@@ -54,7 +68,8 @@ function normalizeLink(raw: unknown): LandingGridLink | null {
   const o = raw as Record<string, unknown>;
   const id = str(o.id);
   const label = str(o.label);
-  const imageUrl = str(o.imageUrl);
+  const rawImg = str(o.imageUrl).trim();
+  const imageUrl = rawImg ? normalizeImageUrl(rawImg) : "";
   if (!id || !label) return null;
   const a = action(o.action);
   const href = str(o.href);
@@ -81,12 +96,16 @@ export function mergeLandingFromFirestore(
 
   const linkedinUrl = normalizeLinkedInProfileUrl(str(data.linkedinUrl, ""));
 
+  const bannerRaw = str(data.bannerUrl).trim();
+  const avatarRaw = str(data.avatarUrl).trim();
+  const badgeRaw = str(data.badgeUrl).trim();
+
   return {
     slug,
     published: Boolean(data.published),
-    bannerUrl: str(data.bannerUrl),
-    avatarUrl: str(data.avatarUrl),
-    badgeUrl: str(data.badgeUrl),
+    bannerUrl: bannerRaw ? normalizeImageUrl(bannerRaw) : base.bannerUrl,
+    avatarUrl: avatarRaw ? normalizeImageUrl(avatarRaw) : base.avatarUrl,
+    badgeUrl: badgeRaw ? normalizeImageUrl(badgeRaw) : base.badgeUrl,
     displayName: str(data.displayName, base.displayName),
     headline: str(data.headline, base.headline),
     subheadline: str(data.subheadline),
