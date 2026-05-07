@@ -72,7 +72,7 @@ function tryInitFromServiceAccountEnv(): App | null {
         return initFromCredentialPath(fallbackPath);
       }
       throw new Error(
-        `FIREBASE_SERVICE_ACCOUNT_JSON is not valid JSON (${parseErr}). In .env use one line only, or remove this variable and set FIREBASE_SERVICE_ACCOUNT_PATH=chatbot.json.`,
+        `FIREBASE_SERVICE_ACCOUNT_JSON is not valid JSON (${parseErr}). Provide exactly one JSON object with no extra wrapping quotes and no trailing characters.`,
       );
     }
   }
