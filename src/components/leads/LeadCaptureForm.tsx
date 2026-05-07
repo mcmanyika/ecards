@@ -8,7 +8,12 @@ const STEPS = [
   { key: "name" as const, label: "Your name", type: "text", placeholder: "Jane Doe" },
   { key: "email" as const, label: "Work email", type: "email", placeholder: "you@company.com" },
   { key: "phone" as const, label: "Phone", type: "tel", placeholder: "+1 (555) 123-4567" },
-  { key: "serviceNeeded" as const, label: "Service needed", type: "text", placeholder: "e.g. strategy workshop, implementation, audit" },
+  {
+    key: "serviceNeeded" as const,
+    label: "What you need",
+    type: "text",
+    placeholder: "e.g. LoadMaster-style TMS, diaspora platform, Django API",
+  },
   { key: "budget" as const, label: "Budget (USD)", type: "text", placeholder: "e.g. 5000 or 10k–15k" },
   { key: "preferredAppointmentDate" as const, label: "Preferred appointment", type: "date", placeholder: "" },
 ];
@@ -99,7 +104,7 @@ export function LeadCaptureForm({
             Book a consultation
           </h3>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            Step {step + 1} of {STEPS.length} · qualified leads notify our team by email
+            Step {step + 1} of {STEPS.length} · qualified leads email Partson
           </p>
         </div>
         <button

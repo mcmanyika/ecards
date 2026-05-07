@@ -15,9 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Atlas Concierge · AI Chat & Lead Capture",
+  title:
+    "Partson Manyika · Founder · Full-Stack & Data Engineer · LoadMaster · WTP · Dallas",
   description:
-    "AI concierge chat with OpenAI, secure cloud storage, lead capture, and admin dashboard.",
+    "Founder full-stack developer and data engineer. LoadMaster TMS, We the People (WTP) diaspora platform. Python, Django, AWS, SQL, Next.js. Dallas, TX. Chat to connect.",
 };
 
 export default function RootLayout({
