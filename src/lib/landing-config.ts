@@ -16,12 +16,12 @@ export function defaultLandingConfig(slug: string): LandingPageConfig {
     displayName: "Partson Manyika",
     headline:
       "Founder | Full-Stack Developer | Data Engineer | SaaS Builder · Python · Django · AWS · SQL · Next.js",
-    subheadline: "LoadMaster TMS · We the People (WTP)",
+    subheadline: "LoadMaster TMS",
     location: "Dallas, TX",
     bio:
-      "Full-stack developer, entrepreneur, and technology builder with 15+ years of experience in web apps, SaaS, and data-driven products. Based in Dallas, I work across Python, Django, SQL/PostgreSQL, AWS, Next.js, React, Firebase, and modern frontend—plus Solidity/blockchain integrations where relevant. Creator of LoadMaster, a transportation management platform for carriers, dispatchers, and fleet ops. Founder of We the People (WTP), connecting Zimbabwe's global diaspora through structured digital services and intelligence. Freelance full-stack & data engineer since 2010: logistics tech, education, blockchain apps, diaspora platforms, dashboards, REST APIs, and cloud systems. Building products that solve real operational problems and deliver measurable business value.",
+      "Full-stack developer, entrepreneur, and technology builder with 25+ years of experience in web apps, SaaS, and data-driven products. Based in Dallas, I work across Python, Django, SQL/PostgreSQL, AWS, Next.js, React, Firebase, and modern frontend—plus Solidity/blockchain integrations where relevant. Creator of LoadMaster, a transportation management platform for carriers, dispatchers, and fleet ops. Freelance full-stack & data engineer since 2010 (among other full-time and contract roles over 25+ years): logistics tech, education, blockchain apps, dashboards, REST APIs, and cloud systems. Building products that solve real operational problems and deliver measurable business value.",
     hashtags:
-      "#LoadMaster #WTP #SaaS #DataEngineering #AWS #Python #Django #NextJs #React #PostgreSQL #LogisticsTech #StartupFounder #Firebase #Blockchain",
+      "#LoadMaster #SaaS #DataEngineering #AWS #Python #Django #NextJs #React #PostgreSQL #LogisticsTech #StartupFounder #Firebase #Blockchain",
     primaryCtaLabel: "Lets Talk",
     linkedinUrl: "",
     links: [],

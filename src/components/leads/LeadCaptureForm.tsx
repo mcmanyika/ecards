@@ -12,7 +12,7 @@ const STEPS = [
     key: "serviceNeeded" as const,
     label: "What you need",
     type: "text",
-    placeholder: "e.g. LoadMaster-style TMS, diaspora platform, Django API",
+    placeholder: "e.g. LoadMaster-style TMS, data pipeline, Django API",
   },
   { key: "budget" as const, label: "Budget (USD)", type: "text", placeholder: "e.g. 5000 or 10k–15k" },
   { key: "preferredAppointmentDate" as const, label: "Preferred appointment", type: "date", placeholder: "" },

@@ -27,23 +27,23 @@ export default function Home() {
       <main className="relative z-10 mx-auto grid max-w-6xl gap-12 px-6 pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-start">
         <section className="space-y-6 pt-4">
           <p className="inline-flex rounded-full border border-violet-200/80 bg-white/90 px-3 py-1 text-xs font-medium uppercase tracking-wider text-violet-800 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-violet-200/90 dark:shadow-none">
-            Dallas, TX · LoadMaster · WTP · 15+ years
+            Dallas, TX · LoadMaster · 25+ years
           </p>
           <h1 className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">
-            SaaS builder for logistics tech, data, & global communities.
+            SaaS builder for logistics tech, data platforms, & fleets.
           </h1>
           <p className="max-w-xl text-pretty text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
             Founder and full-stack / data engineer: Python · Django · SQL · AWS
             · Next.js · React · Firebase. Building LoadMaster (TMS for carriers &
-            fleets) and We the People (WTP)—a diaspora platform for Zimbabwe &
-            global connection. Freelance engineer since 2010. Ask anything in chat
+            fleets). 25+ years in technology—including freelance &
+            contract work since 2010. Ask anything in chat
             or leave your details; I follow up when it fits.
           </p>
           <ul className="grid gap-3 text-sm text-zinc-700 dark:text-zinc-300 sm:grid-cols-2">
             {[
               "Full-stack SaaS & data engineering",
               "LoadMaster TMS · fleets, dispatch & analytics",
-              "WTP · diaspora services & ecosystems",
+              "SaaS architecture & integrations",
               "Python Django AWS Next.js Postgres Firebase",
             ].map((item) => (
               <li

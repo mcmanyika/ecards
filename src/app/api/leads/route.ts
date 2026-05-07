@@ -29,11 +29,25 @@ export async function POST(req: Request) {
     const qualified = isQualifiedLead(payload);
 
     const db = getDb();
-    const docRef = await db.collection("leads").add({
-      ...payload,
+    const cid =
+      typeof payload.conversationId === "string"
+        ? payload.conversationId.trim()
+        : "";
+    const docData: Record<string, unknown> = {
+      name: payload.name,
+      email: payload.email,
+      phone: payload.phone,
+      serviceNeeded: payload.serviceNeeded,
+      budget: payload.budget,
+      preferredAppointmentDate: payload.preferredAppointmentDate,
       qualified,
       createdAt: FieldValue.serverTimestamp(),
-    });
+    };
+    if (cid) {
+      docData.conversationId = cid;
+    }
+
+    const docRef = await db.collection("leads").add(docData);
 
     let emailResult: Awaited<ReturnType<typeof sendQualifiedLeadEmail>> | null =
       null;

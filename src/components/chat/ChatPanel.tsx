@@ -83,7 +83,7 @@ export function ChatPanel({
             Message Partson
           </h2>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            LoadMaster, WTP, SaaS, data & full-stack—or leave your{" "}
+            LoadMaster, SaaS, data & full-stack—or leave your{" "}
             <strong className="font-medium">name</strong>,{" "}
             <strong className="font-medium">email</strong>,{" "}
             <strong className="font-medium">phone</strong> on this thread. Use{" "}
@@ -108,8 +108,8 @@ export function ChatPanel({
 
       {messages.length === 0 && !loading && (
         <div className="mx-5 mt-4 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm text-violet-950 dark:border-violet-500/20 dark:bg-violet-950/30 dark:text-violet-100/90">
-          Hi — ask about LoadMaster (TMS/logistics SaaS), WTP (diaspora
-          platform), or Partson&apos;s freelance full-stack/data work—or share
+          Hi — ask about LoadMaster (TMS/logistics SaaS), or Partson&apos;s
+          freelance full-stack/data work—or share
           your <strong>name</strong>, <strong>email</strong>, and{" "}
           <strong>phone</strong> here. Budget and timing:&nbsp;
           <strong className="font-semibold">Get a quote</strong>.

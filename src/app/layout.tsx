@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title:
-    "Partson Manyika · Founder · Full-Stack & Data Engineer · LoadMaster · WTP · Dallas",
+    "Partson Manyika · Founder · Full-Stack & Data Engineer · LoadMaster · Dallas",
   description:
-    "Founder full-stack developer and data engineer. LoadMaster TMS, We the People (WTP) diaspora platform. Python, Django, AWS, SQL, Next.js. Dallas, TX. Chat to connect.",
+    "Founder full-stack developer and data engineer. LoadMaster TMS & logistics SaaS. Python, Django, AWS, SQL, Next.js. Dallas, TX. Chat to connect.",
 };
 
 export default function RootLayout({
