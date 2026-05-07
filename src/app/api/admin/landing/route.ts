@@ -1,4 +1,4 @@
-import { assertAdmin } from "@/lib/admin-session";
+import { getAdminSessionWithOrg } from "@/lib/admin-org";
 import {
   DEFAULT_LANDING_SLUG,
   defaultLandingConfig,
@@ -104,8 +104,15 @@ function parseBody(body: unknown): LandingPageConfig | null {
   return cfg;
 }
 
+function docOrgId(data: Record<string, unknown> | undefined): string {
+  return typeof data?.organizationId === "string"
+    ? data.organizationId.trim()
+    : "";
+}
+
 export async function GET(req: Request) {
-  if (!(await assertAdmin())) {
+  const ctx = await getAdminSessionWithOrg();
+  if (!ctx) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
@@ -115,10 +122,14 @@ export async function GET(req: Request) {
 
   try {
     const snap = await getDb().collection(COLLECTION).doc(slug).get();
-    const merged = mergeLandingFromFirestore(
-      slug,
-      snap.exists ? (snap.data() as Record<string, unknown>) : undefined,
-    );
+    const raw = snap.exists
+      ? (snap.data() as Record<string, unknown>)
+      : undefined;
+    const existingOrg = docOrgId(raw);
+    if (snap.exists && existingOrg && existingOrg !== ctx.organizationId) {
+      return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+    }
+    const merged = mergeLandingFromFirestore(slug, raw);
     return NextResponse.json({ config: merged, exists: snap.exists });
   } catch (e) {
     console.error(e);
@@ -130,7 +141,8 @@ export async function GET(req: Request) {
 }
 
 export async function PUT(req: Request) {
-  if (!(await assertAdmin())) {
+  const ctx = await getAdminSessionWithOrg();
+  if (!ctx) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
@@ -142,9 +154,18 @@ export async function PUT(req: Request) {
     }
 
     const ref = getDb().collection(COLLECTION).doc(cfg.slug);
+    const prior = await ref.get();
+    const priorOrg = docOrgId(
+      prior.exists ? (prior.data() as Record<string, unknown>) : undefined,
+    );
+    if (prior.exists && priorOrg && priorOrg !== ctx.organizationId) {
+      return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+    }
+
     await ref.set(
       {
         ...cfg,
+        organizationId: ctx.organizationId,
         updatedAt: FieldValue.serverTimestamp(),
       },
       { merge: true },

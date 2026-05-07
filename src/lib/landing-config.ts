@@ -6,6 +6,33 @@ import type {
 
 export const DEFAULT_LANDING_SLUG = "main";
 
+/** Fresh link-in-bio for a new team member (minimal copy; client-specific defaults). */
+export function emptyEmployeeLanding(
+  slug: string,
+  displayName: string,
+): LandingPageConfig {
+  const dm = displayName.trim() || "Team member";
+  return {
+    slug,
+    published: false,
+    bannerUrl: "",
+    avatarUrl: "",
+    badgeUrl: "",
+    displayName: dm,
+    headline: "Role · title",
+    subheadline: "",
+    location: "",
+    bio: "",
+    hashtags: "",
+    primaryCtaLabel: "Lets Talk",
+    linkedinUrl: "",
+    contactPhone: "",
+    contactEmail: "",
+    websiteUrl: "",
+    links: [],
+  };
+}
+
 export function defaultLandingConfig(slug: string): LandingPageConfig {
   return {
     slug,

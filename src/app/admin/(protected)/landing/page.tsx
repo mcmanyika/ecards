@@ -9,9 +9,9 @@ import {
 import { getFirebaseAuth } from "@/lib/firebase/client";
 import type { LandingGridLink, LandingLinkAction, LandingPageConfig } from "@/types/landing";
 import { signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import QRCode from "react-qr-code";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, startTransition, useCallback, useEffect, useState } from "react";
 
 function emptyLink(): LandingGridLink {
   return {
@@ -23,8 +23,9 @@ function emptyLink(): LandingGridLink {
   };
 }
 
-export default function AdminLandingEditorPage() {
+function AdminLandingEditorInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [slugInput, setSlugInput] = useState(DEFAULT_LANDING_SLUG);
   const [config, setConfig] = useState<LandingPageConfig | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,41 +38,15 @@ export default function AdminLandingEditorPage() {
   const slug =
     sanitizeSlug(slugInput) ?? DEFAULT_LANDING_SLUG;
 
-  const load = useCallback(async () => {
-    const s = sanitizeSlug(slugInput) ?? DEFAULT_LANDING_SLUG;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(
-        `/api/admin/landing?slug=${encodeURIComponent(s)}`,
-      );
-      if (res.status === 401) {
-        router.push("/admin/login");
-        return;
-      }
-      const data = (await res.json()) as {
-        config?: LandingPageConfig;
-        error?: string;
-      };
-      if (!res.ok) throw new Error(data.error ?? "Failed to load.");
-      if (data.config) {
-        setConfig(data.config);
-        setSlugInput(data.config.slug);
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load.");
-    } finally {
-      setLoading(false);
-    }
-  }, [router, slugInput]);
-
-  useEffect(() => {
-    void (async () => {
+  const loadLanding = useCallback(
+    async (slugRaw: string) => {
+      const s = sanitizeSlug(slugRaw) ?? DEFAULT_LANDING_SLUG;
+      setSlugInput(s);
       setLoading(true);
       setError(null);
       try {
         const res = await fetch(
-          `/api/admin/landing?slug=${encodeURIComponent(DEFAULT_LANDING_SLUG)}`,
+          `/api/admin/landing?slug=${encodeURIComponent(s)}`,
         );
         if (res.status === 401) {
           router.push("/admin/login");
@@ -91,12 +66,22 @@ export default function AdminLandingEditorPage() {
       } finally {
         setLoading(false);
       }
-    })();
-  }, [router]);
+    },
+    [router],
+  );
+
+  useEffect(() => {
+    const q = searchParams.get("slug")?.trim() ?? "";
+    const initial = sanitizeSlug(q) ?? DEFAULT_LANDING_SLUG;
+    startTransition(() => {
+      void loadLanding(initial);
+    });
+  }, [searchParams, loadLanding]);
 
   useEffect(() => {
     const fromEnv = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "").trim();
     setPublicBaseUrl(fromEnv || window.location.origin);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only sync for QR base URL
   }, []);
 
   const landingAbsoluteUrl =
@@ -202,6 +187,13 @@ export default function AdminLandingEditorPage() {
             <Button
               variant="ghost"
               type="button"
+              onClick={() => router.push("/admin/employees")}
+            >
+              Team profiles
+            </Button>
+            <Button
+              variant="ghost"
+              type="button"
               onClick={() => router.push("/admin")}
             >
               Dashboard
@@ -244,7 +236,7 @@ export default function AdminLandingEditorPage() {
                     type="button"
                     variant="secondary"
                     className="text-xs"
-                    onClick={() => void load()}
+                    onClick={() => void loadLanding(slugInput)}
                   >
                     Load this slug
                   </Button>
@@ -593,5 +585,19 @@ export default function AdminLandingEditorPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AdminLandingEditorPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-zinc-50 px-4 py-16 text-center text-sm text-zinc-600 dark:bg-zinc-950 dark:text-zinc-400">
+          Loading editor…
+        </div>
+      }
+    >
+      <AdminLandingEditorInner />
+    </Suspense>
   );
 }

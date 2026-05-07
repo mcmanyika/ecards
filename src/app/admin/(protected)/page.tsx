@@ -158,6 +158,13 @@ export default function AdminDashboardPage() {
             <Button
               variant="ghost"
               type="button"
+              onClick={() => router.push("/admin/employees")}
+            >
+              Team profiles
+            </Button>
+            <Button
+              variant="ghost"
+              type="button"
               onClick={() => router.push("/admin/landing")}
             >
               Landing page

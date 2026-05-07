@@ -137,7 +137,7 @@ export function LandingPageClient({
   const showAvatarImage = Boolean(avatarSrc) && !avatarLoadFailed;
 
   useEffect(() => {
-    setAvatarLoadFailed(false);
+    queueMicrotask(() => setAvatarLoadFailed(false));
   }, [avatarSrc]);
 
   const openChat = useCallback(() => setChatOpen(true), []);
