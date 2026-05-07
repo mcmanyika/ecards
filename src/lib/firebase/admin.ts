@@ -23,17 +23,43 @@ function initFromCredentialPath(pathEnv: string): App {
   });
 }
 
+function unwrapPossiblyQuotedJson(raw: string): string {
+  const trimmed = raw.trim();
+  if (!trimmed) return trimmed;
+
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    const inner = trimmed.slice(1, -1).trim();
+    if (inner.startsWith("{") && inner.endsWith("}")) {
+      return inner;
+    }
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (typeof parsed === "string") {
+        return parsed.trim();
+      }
+    } catch {
+      return trimmed;
+    }
+  }
+
+  return trimmed;
+}
+
 function tryInitFromServiceAccountEnv(): App | null {
   const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON?.trim();
   if (!raw) return null;
+  const normalized = unwrapPossiblyQuotedJson(raw);
 
   const fallbackPath =
     process.env.FIREBASE_SERVICE_ACCOUNT_PATH?.trim() ||
     process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim();
 
-  if (raw.startsWith("{")) {
+  if (normalized.startsWith("{")) {
     try {
-      const credentials = JSON.parse(raw) as ServiceAccount;
+      const credentials = JSON.parse(normalized) as ServiceAccount;
       return initializeApp({
         credential: cert(credentials),
       });
@@ -51,7 +77,7 @@ function tryInitFromServiceAccountEnv(): App | null {
     }
   }
 
-  return initFromCredentialPath(raw);
+  return initFromCredentialPath(normalized);
 }
 
 function getFirebaseAdminApp(): App {
