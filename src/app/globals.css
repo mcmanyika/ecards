@@ -14,6 +14,60 @@
 
 body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Shared slick surfaces */
+.glass-card {
+  border: 1px solid rgb(228 228 231 / 0.8);
+  background: rgb(255 255 255 / 0.72);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 8px 24px rgb(0 0 0 / 0.04);
+  backdrop-filter: blur(12px);
+}
+
+.dark .glass-card {
+  border-color: rgb(255 255 255 / 0.08);
+  background: rgb(24 24 27 / 0.55);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.04) inset,
+    0 12px 40px rgb(0 0 0 / 0.35);
+}
+
+.glass-pill {
+  border: 1px solid rgb(228 228 231 / 0.9);
+  background: rgb(255 255 255 / 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.dark .glass-pill {
+  border-color: rgb(255 255 255 / 0.1);
+  background: rgb(39 39 42 / 0.5);
+}
+
+.slick-hover {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.slick-hover:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 12px rgb(0 0 0 / 0.06),
+    0 16px 32px rgb(0 0 0 / 0.06);
+}
+
+.dark .slick-hover:hover {
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 0.35),
+    0 0 0 1px rgb(255 255 255 / 0.06);
 }
 
 /* Hand cursor on links (Next.js <Link /> renders <a href>). */

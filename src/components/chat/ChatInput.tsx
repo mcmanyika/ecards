@@ -23,13 +23,13 @@ export function ChatInput({
   return (
     <form
       onSubmit={handleSubmit}
-      className="border-t border-zinc-200 bg-zinc-50/95 p-3 backdrop-blur dark:border-white/10 dark:bg-zinc-950/80"
+      className="border-t border-zinc-200/80 p-4 dark:border-white/8"
     >
-      <div className="flex gap-2">
+      <div className="flex items-end gap-2 rounded-2xl border border-zinc-200/90 bg-zinc-50/90 p-1.5 shadow-inner shadow-zinc-900/5 dark:border-white/10 dark:bg-zinc-950/60 dark:shadow-black/20">
         <textarea
           rows={1}
-          placeholder="Ask anything…"
-          className="max-h-40 min-h-[48px] flex-1 resize-none rounded-xl border border-zinc-300 bg-white px-3 py-3 text-[15px] text-zinc-900 placeholder:text-zinc-500 focus:border-zinc-500/60 focus:outline-none focus:ring-2 focus:ring-zinc-500/25 dark:border-white/10 dark:bg-zinc-900/80 dark:text-zinc-100 dark:focus:border-zinc-400/50 dark:focus:ring-zinc-500/20"
+          placeholder="Ask about packages, pricing, or your project…"
+          className="max-h-36 min-h-[44px] flex-1 resize-none bg-transparent px-3 py-2.5 text-[15px] text-zinc-900 placeholder:text-zinc-500 focus:outline-none dark:text-zinc-100 dark:placeholder:text-zinc-600"
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
@@ -42,9 +42,9 @@ export function ChatInput({
         />
         <Button
           type="submit"
-          variant="secondary"
+          variant="primary"
           disabled={disabled || !value.trim()}
-          className="shrink-0 self-end px-5"
+          className="h-10 shrink-0 px-5"
         >
           Send
         </Button>

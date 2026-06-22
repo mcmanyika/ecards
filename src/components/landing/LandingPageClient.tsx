@@ -101,10 +101,10 @@ function GlobeIcon({ className }: { className?: string }) {
 }
 
 const CONTACT_CHIP_LINK_CLASS =
-  "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full border border-violet-200/90 bg-white px-3.5 py-2 font-medium text-violet-900 shadow-sm transition-[background-color,border-color,box-shadow] no-underline hover:border-violet-300 hover:bg-violet-50 hover:shadow-md dark:border-violet-500/25 dark:bg-zinc-900/75 dark:text-violet-100 dark:hover:border-violet-400/35 dark:hover:bg-violet-950/50";
+  "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full border border-zinc-200/90 bg-white/90 px-3.5 py-2 font-medium text-zinc-800 shadow-sm backdrop-blur transition no-underline hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md dark:border-white/10 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:border-white/15 dark:hover:bg-zinc-900";
 
 const CONTACT_CHIP_ICON_CLASS =
-  "size-4 shrink-0 text-violet-600 opacity-90 dark:text-violet-300";
+  "size-4 shrink-0 text-zinc-500 dark:text-zinc-400";
 
 function LinkedInBrandTile() {
   return (
@@ -238,7 +238,7 @@ export function LandingPageClient({
   }
 
   return (
-    <div className="min-h-screen bg-zinc-100 pb-10 font-serif text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
+    <div className="min-h-screen bg-zinc-50 pb-10 font-serif text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
       <div className="relative mx-auto max-w-lg">
         <div className="relative aspect-[21/10] w-full overflow-hidden bg-zinc-300 dark:bg-zinc-800">
           {config.bannerUrl ? (
@@ -339,7 +339,7 @@ export function LandingPageClient({
           <button
             type="button"
             onClick={openChat}
-            className="mt-4 w-full rounded-full bg-zinc-900 py-4 text-center text-base font-semibold tracking-wide text-white shadow-lg shadow-zinc-400/25 transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:shadow-zinc-950/35 dark:hover:bg-zinc-200"
+            className="slick-hover mt-4 w-full rounded-full bg-zinc-900 py-4 text-center text-base font-semibold tracking-wide text-white shadow-lg shadow-zinc-900/20 transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:shadow-white/10 dark:hover:bg-zinc-100"
           >
             {config.primaryCtaLabel.trim() || "Lets Talk"}
           </button>
@@ -362,7 +362,7 @@ export function LandingPageClient({
                   tileCount === 1 ? "w-[36%] max-w-[124px]" : ""
                 }`}
               >
-                <div className="aspect-square w-full overflow-hidden rounded-2xl shadow-md shadow-zinc-400/20 dark:shadow-zinc-950/35">
+                <div className="slick-hover aspect-square w-full overflow-hidden rounded-2xl shadow-md shadow-zinc-900/10 ring-1 ring-zinc-900/5 transition dark:shadow-black/40 dark:ring-white/10">
                   <LinkedInBrandTile />
                 </div>
               </button>
@@ -376,7 +376,7 @@ export function LandingPageClient({
                   tileCount === 1 ? "w-[36%] max-w-[124px]" : ""
                 }`}
               >
-                <div className="aspect-square w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-md shadow-zinc-400/20 dark:bg-zinc-800 dark:shadow-zinc-950/35">
+                <div className="slick-hover aspect-square w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-md shadow-zinc-900/10 ring-1 ring-zinc-900/5 transition dark:bg-zinc-800 dark:shadow-black/40 dark:ring-white/10">
                   {link.imageUrl?.trim() ? (
                     <img
                       src={link.imageUrl}
@@ -402,7 +402,7 @@ export function LandingPageClient({
             className="absolute inset-0 cursor-pointer border-0 bg-transparent"
             onClick={closeChat}
           />
-          <div className="relative z-[101] mx-auto w-full max-w-lg rounded-3xl bg-zinc-100 p-3 pb-6 shadow-2xl shadow-black/25 dark:bg-zinc-900 dark:shadow-black/50">
+          <div className="relative z-[101] mx-auto w-full max-w-lg rounded-[1.75rem] p-3 pb-6 shadow-2xl shadow-black/30 dark:shadow-black/50">
             <div className="mb-2 flex items-center justify-between px-2">
               <p className="font-sans text-sm font-semibold text-zinc-900 dark:text-white">
                 Chat

@@ -1,4 +1,5 @@
 import { FirebaseAnalytics } from "@/components/firebase/FirebaseAnalytics";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -32,10 +33,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100">
+      <body className="flex min-h-full flex-col bg-zinc-50 text-zinc-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100">
         <ThemeProvider>
           <FirebaseAnalytics />
-          {children}
+          <div className="flex flex-1 flex-col">{children}</div>
+          <SiteFooter />
         </ThemeProvider>
       </body>
     </html>

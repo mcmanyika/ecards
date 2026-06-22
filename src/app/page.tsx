@@ -1,74 +1,94 @@
 import { ChatPanel } from "@/components/chat/ChatPanel";
+import { ServicePackages } from "@/components/services/ServicePackages";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import Link from "next/link";
 
+const HIGHLIGHTS: { label: string; href?: string }[] = [
+  { label: "Full-stack SaaS" },
+  { label: "LoadMaster TMS", href: "https://www.loadmaster.sh" },
+  { label: "The Timba Papers", href: "https://www.jamesontimba.com" },
+  { label: "Python · Django · AWS" },
+];
+
+const HIGHLIGHT_PILL_CLASS =
+  "glass-pill rounded-full px-3 py-1 text-[11px] font-medium text-zinc-600 transition dark:text-zinc-400";
+
 export default function Home() {
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-200/55 via-zinc-100 to-zinc-50 dark:from-zinc-800/40 dark:via-zinc-950 dark:to-zinc-950" />
-      <div className="pointer-events-none absolute -left-32 top-1/4 h-72 w-72 rounded-full bg-zinc-300/35 blur-3xl dark:bg-zinc-600/12" />
-      <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-zinc-400/25 blur-3xl dark:bg-zinc-500/14" />
+    <div className="relative min-h-screen overflow-x-hidden bg-zinc-50 dark:bg-zinc-950">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-300/40 via-zinc-50 to-zinc-50 dark:from-zinc-700/20 dark:via-zinc-950 dark:to-zinc-950" />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.35] dark:opacity-[0.12]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgb(161 161 170 / 0.15) 1px, transparent 1px), linear-gradient(90deg, rgb(161 161 170 / 0.15) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+      <div className="pointer-events-none absolute -left-24 top-20 h-96 w-96 rounded-full bg-zinc-300/30 blur-3xl dark:bg-zinc-600/10" />
+      <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-zinc-400/20 blur-3xl dark:bg-zinc-500/10" />
 
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-8">
-        <span className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-white">
-          Partson Manyika
-        </span>
-        <nav className="flex items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400 sm:gap-6">
-          <ThemeToggle />
+      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-xs font-bold text-white dark:bg-white dark:text-zinc-950">
+            PM
+          </div>
+          <span className="text-base font-semibold tracking-tight text-zinc-900 dark:text-white">
+            Partson Manyika
+          </span>
+        </div>
+        <nav className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+          <ThemeToggle className="h-9 w-9 rounded-full" />
           <Link
             href="/admin/login"
-            className="hover:text-zinc-900 dark:hover:text-white"
+            className="glass-pill rounded-full px-3.5 py-2 font-medium text-zinc-700 transition hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white"
           >
             Admin
           </Link>
         </nav>
       </header>
 
-      <main className="relative z-10 mx-auto grid max-w-6xl gap-12 px-6 pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-start">
-        <section className="space-y-6 pt-4">
-          <p className="inline-flex rounded-full border border-violet-200/80 bg-white/90 px-3 py-1 text-xs font-medium uppercase tracking-wider text-violet-800 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-violet-200/90 dark:shadow-none">
-            Dallas, TX · LoadMaster · 25+ years
+      <main className="relative z-10 mx-auto flex min-h-[calc(100svh-4.5rem)] w-full max-w-lg flex-col items-center justify-center px-6 pb-10">
+        <div className="mb-5 w-full text-center">
+          <p className="glass-pill mx-auto inline-flex rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-400">
+            Dallas, TX · 25+ years
           </p>
-          <h1 className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">
-            SaaS builder for logistics tech, web apps, & fleets.
+          <h1 className="mt-4 text-balance text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-3xl">
+            Full-stack SaaS & web apps
           </h1>
-          <p className="max-w-xl text-pretty text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Founder and full-stack developer: Python · Django · SQL · AWS
-            · Next.js · React · Firebase. Building LoadMaster (TMS for carriers &
-            fleets) and client platforms such as{" "}
-            <a
-              href="https://jamesontimba.com/"
-              className="font-medium text-zinc-800 underline decoration-zinc-400 underline-offset-2 hover:text-zinc-950 dark:text-zinc-200 dark:hover:text-white"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              The Timba Papers
-            </a>
-            . 25+ years in technology—including freelance &
-            contract work since 2002. Ask anything in chat
-            or leave your details; I follow up when it fits.
+          <p className="mx-auto mt-2 max-w-sm text-pretty text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            Pick a package, ask about pricing, or request a quote.
           </p>
-          <ul className="grid gap-3 text-sm text-zinc-700 dark:text-zinc-300 sm:grid-cols-2">
-            {[
-              "Full-stack SaaS & web apps",
-              "LoadMaster TMS · fleets, dispatch & analytics",
-              "The Timba Papers · jamesontimba.com",
-              "Python Django AWS Next.js Postgres Firebase",
-            ].map((item) => (
-              <li
-                key={item}
-                className="rounded-2xl border border-zinc-200/90 bg-white/70 px-4 py-3 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/[0.03] dark:shadow-none"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </section>
+        </div>
 
-        <section>
-          <ChatPanel />
-        </section>
+        <div className="w-full shadow-2xl shadow-zinc-900/10 dark:shadow-black/50">
+          <ChatPanel centered />
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {HIGHLIGHTS.map((item) =>
+            item.href ? (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${HIGHLIGHT_PILL_CLASS} hover:text-zinc-900 dark:hover:text-zinc-200`}
+              >
+                {item.label}
+              </a>
+            ) : (
+              <span key={item.label} className={HIGHLIGHT_PILL_CLASS}>
+                {item.label}
+              </span>
+            ),
+          )}
+        </div>
       </main>
+
+      <section className="relative z-10 mx-auto max-w-4xl px-6 pb-20 pt-4">
+        <ServicePackages />
+      </section>
     </div>
   );
 }
