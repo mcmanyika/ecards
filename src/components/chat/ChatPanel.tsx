@@ -112,7 +112,7 @@ export function ChatPanel({
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
               <h2 className="text-base font-semibold tracking-tight text-zinc-900 dark:text-white">
-                Message Partson
+                Message Manyika
               </h2>
             </div>
             <p className="mt-1.5 line-clamp-2 text-sm text-zinc-500 dark:text-zinc-400">

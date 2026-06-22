@@ -48,47 +48,49 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="relative z-10 mx-auto flex min-h-[calc(100svh-4.5rem)] w-full max-w-lg flex-col items-center justify-center px-6 pb-10">
-        <div className="mb-5 w-full text-center">
-          <p className="glass-pill mx-auto inline-flex rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-400">
+      <main className="relative z-10 mx-auto max-w-6xl px-6 pb-16 pt-2">
+        <div className="mb-8 text-center lg:mb-10 lg:text-left">
+          <p className="glass-pill mx-auto inline-flex rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-400 lg:mx-0">
             Dallas, TX · 25+ years
           </p>
-          <h1 className="mt-4 text-balance text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-3xl">
+          <h1 className="mt-4 text-balance text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-3xl lg:max-w-xl">
             Full-stack SaaS & web apps
           </h1>
-          <p className="mx-auto mt-2 max-w-sm text-pretty text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <p className="mx-auto mt-2 max-w-sm text-pretty text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 lg:mx-0">
             Pick a package, ask about pricing, or request a quote.
           </p>
+          <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
+            {HIGHLIGHTS.map((item) =>
+              item.href ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${HIGHLIGHT_PILL_CLASS} hover:text-zinc-900 dark:hover:text-zinc-200`}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <span key={item.label} className={HIGHLIGHT_PILL_CLASS}>
+                  {item.label}
+                </span>
+              ),
+            )}
+          </div>
         </div>
 
-        <div className="w-full shadow-2xl shadow-zinc-900/10 dark:shadow-black/50">
-          <ChatPanel centered />
-        </div>
-
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          {HIGHLIGHTS.map((item) =>
-            item.href ? (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${HIGHLIGHT_PILL_CLASS} hover:text-zinc-900 dark:hover:text-zinc-200`}
-              >
-                {item.label}
-              </a>
-            ) : (
-              <span key={item.label} className={HIGHLIGHT_PILL_CLASS}>
-                {item.label}
-              </span>
-            ),
-          )}
+        <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
+          <section className="order-2 lg:order-1 lg:col-span-6">
+            <ServicePackages stacked />
+          </section>
+          <section className="order-1 lg:sticky lg:top-8 lg:order-2 lg:col-span-6">
+            <div className="shadow-2xl shadow-zinc-900/10 dark:shadow-black/50">
+              <ChatPanel />
+            </div>
+          </section>
         </div>
       </main>
-
-      <section className="relative z-10 mx-auto max-w-4xl px-6 pb-20 pt-4">
-        <ServicePackages />
-      </section>
     </div>
   );
 }

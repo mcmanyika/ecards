@@ -1,6 +1,13 @@
 import { SERVICE_PACKAGES } from "@/lib/service-packages";
 
-export function ServicePackages({ compact = false }: { compact?: boolean }) {
+export function ServicePackages({
+  compact = false,
+  stacked = false,
+}: {
+  compact?: boolean;
+  /** Single column — for side-by-side layouts with chat */
+  stacked?: boolean;
+}) {
   return (
     <div className={compact ? "space-y-3" : "space-y-5"}>
       <div className="flex items-end justify-between gap-4">
@@ -24,7 +31,7 @@ export function ServicePackages({ compact = false }: { compact?: boolean }) {
           )}
         </div>
       </div>
-      <ul className="grid gap-3 sm:grid-cols-2">
+      <ul className={`grid gap-3 ${stacked ? "grid-cols-1" : "sm:grid-cols-2"}`}>
         {SERVICE_PACKAGES.map((pkg, i) => (
           <li
             key={pkg.id}
