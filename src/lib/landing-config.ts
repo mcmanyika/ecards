@@ -42,19 +42,27 @@ export function defaultLandingConfig(slug: string): LandingPageConfig {
     badgeUrl: "",
     displayName: "Partson Manyika",
     headline:
-      "Founder | Full-Stack Developer | Data Engineer | SaaS Builder · Python · Django · AWS · SQL · Next.js",
+      "Founder | Full-Stack Developer | SaaS Builder · Python · Django · AWS · SQL · Next.js",
     subheadline: "LoadMaster TMS",
     location: "Dallas, TX",
     bio:
-      "Full-stack developer, entrepreneur, and technology builder with 25+ years of experience in web apps, SaaS, and data-driven products. Based in Dallas, I work across Python, Django, SQL/PostgreSQL, AWS, Next.js, React, Firebase, and modern frontend—plus Solidity/blockchain integrations where relevant. Creator of LoadMaster, a transportation management platform for carriers, dispatchers, and fleet ops. Freelance full-stack & data engineer since 2010 (among other full-time and contract roles over 25+ years): logistics tech, education, blockchain apps, dashboards, REST APIs, and cloud systems. Building products that solve real operational problems and deliver measurable business value.",
+      "Full-stack developer, entrepreneur, and technology builder with 25+ years of experience in web apps, SaaS, and data-driven products. Based in Dallas, I work across Python, Django, SQL/PostgreSQL, AWS, Next.js, React, Firebase, and modern frontend—plus Solidity/blockchain integrations where relevant. Creator of LoadMaster, a transportation management platform for carriers, dispatchers, and fleet ops. Selected client work includes The Timba Papers (jamesontimba.com)—an editorial publication platform for essays, policy papers, and speeches on democracy and constitutionalism in Zimbabwe. Freelance full-stack developer since 2002 (among other full-time and contract roles over 25+ years): logistics tech, education, blockchain apps, dashboards, REST APIs, and cloud systems. Building products that solve real operational problems and deliver measurable business value.",
     hashtags:
-      "#LoadMaster #SaaS #DataEngineering #AWS #Python #Django #NextJs #React #PostgreSQL #LogisticsTech #StartupFounder #Firebase #Blockchain",
+      "#LoadMaster #SaaS #AWS #Python #Django #NextJs #React #PostgreSQL #LogisticsTech #StartupFounder #Firebase #Blockchain",
     primaryCtaLabel: "Lets Talk",
     linkedinUrl: "",
     contactPhone: "",
     contactEmail: "",
     websiteUrl: "",
-    links: [],
+    links: [
+      {
+        id: "timba-papers",
+        label: "The Timba Papers",
+        imageUrl: "",
+        action: "external",
+        href: "https://jamesontimba.com/",
+      },
+    ],
   };
 }
 
@@ -136,9 +144,19 @@ export function mergeLandingFromFirestore(
   if (!data) return base;
 
   const linksRaw = Array.isArray(data.links) ? data.links : [];
-  const links = linksRaw
+  const parsedLinks = linksRaw
     .map(normalizeLink)
     .filter((x): x is LandingGridLink => x !== null);
+  const hasTimbaLink = parsedLinks.some((l) =>
+    /jamesontimba\.com/i.test(l.href ?? ""),
+  );
+  const timbaDefault = base.links.find((l) => l.id === "timba-papers");
+  const links =
+    parsedLinks.length > 0
+      ? hasTimbaLink || !timbaDefault
+        ? parsedLinks
+        : [...parsedLinks, timbaDefault]
+      : base.links;
 
   const linkedinUrl = normalizeLinkedInProfileUrl(str(data.linkedinUrl, ""));
   const websiteUrl = normalizeWebsiteUrl(str(data.websiteUrl, ""));
@@ -157,7 +175,12 @@ export function mergeLandingFromFirestore(
     headline: str(data.headline, base.headline),
     subheadline: str(data.subheadline),
     location: str(data.location),
-    bio: str(data.bio),
+    bio: (() => {
+      const raw = str(data.bio).trim();
+      if (!raw) return base.bio;
+      if (/jamesontimba|timba papers/i.test(raw)) return raw;
+      return `${raw} Selected client work includes The Timba Papers (jamesontimba.com)—an editorial publication platform for essays, policy, and speeches on democracy and constitutionalism in Zimbabwe.`;
+    })(),
     hashtags: str(data.hashtags),
     primaryCtaLabel: normalizePrimaryCtaLabel(
       str(data.primaryCtaLabel, ""),

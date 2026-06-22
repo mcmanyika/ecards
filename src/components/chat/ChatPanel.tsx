@@ -90,7 +90,7 @@ export function ChatPanel({
             Message Partson
           </h2>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            LoadMaster, SaaS, data & full-stack—or leave your{" "}
+            LoadMaster, SaaS & full-stack—or leave your{" "}
             <strong className="font-medium">name</strong>,{" "}
             <strong className="font-medium">email</strong>,{" "}
             <strong className="font-medium">phone</strong> on this thread. Use{" "}

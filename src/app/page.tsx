@@ -30,20 +30,29 @@ export default function Home() {
             Dallas, TX · LoadMaster · 25+ years
           </p>
           <h1 className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">
-            SaaS builder for logistics tech, data platforms, & fleets.
+            SaaS builder for logistics tech, web apps, & fleets.
           </h1>
           <p className="max-w-xl text-pretty text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Founder and full-stack / data engineer: Python · Django · SQL · AWS
+            Founder and full-stack developer: Python · Django · SQL · AWS
             · Next.js · React · Firebase. Building LoadMaster (TMS for carriers &
-            fleets). 25+ years in technology—including freelance &
-            contract work since 2010. Ask anything in chat
+            fleets) and client platforms such as{" "}
+            <a
+              href="https://jamesontimba.com/"
+              className="font-medium text-zinc-800 underline decoration-zinc-400 underline-offset-2 hover:text-zinc-950 dark:text-zinc-200 dark:hover:text-white"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              The Timba Papers
+            </a>
+            . 25+ years in technology—including freelance &
+            contract work since 2002. Ask anything in chat
             or leave your details; I follow up when it fits.
           </p>
           <ul className="grid gap-3 text-sm text-zinc-700 dark:text-zinc-300 sm:grid-cols-2">
             {[
-              "Full-stack SaaS & data engineering",
+              "Full-stack SaaS & web apps",
               "LoadMaster TMS · fleets, dispatch & analytics",
-              "SaaS architecture & integrations",
+              "The Timba Papers · jamesontimba.com",
               "Python Django AWS Next.js Postgres Firebase",
             ].map((item) => (
               <li
