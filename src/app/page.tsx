@@ -7,6 +7,7 @@ const HIGHLIGHTS: { label: string; href?: string }[] = [
   { label: "Full-stack SaaS" },
   { label: "LoadMaster TMS", href: "https://www.loadmaster.sh" },
   { label: "The Timba Papers", href: "https://www.jamesontimba.com" },
+  { label: "DCP", href: "https://dcpzim.com/" },
   { label: "Python · Django · AWS" },
 ];
 
