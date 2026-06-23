@@ -8,6 +8,7 @@ const HIGHLIGHTS: { label: string; href?: string }[] = [
   { label: "LoadMaster TMS", href: "https://www.loadmaster.sh" },
   { label: "The Timba Papers", href: "https://www.jamesontimba.com" },
   { label: "DCP", href: "https://dcpzim.com/" },
+  { label: "EAL Support", href: "https://eal-ruby.vercel.app/" },
   { label: "Python · Django · AWS" },
 ];
 
